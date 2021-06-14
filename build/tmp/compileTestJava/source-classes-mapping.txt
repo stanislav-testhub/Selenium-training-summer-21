@@ -1,0 +1,2 @@
+selenium/training/SimpleTest.java
+ selenium.training.SimpleTest
