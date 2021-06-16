@@ -1,3 +1,4 @@
+#List of rules for ignoring
 *.class
 .mtj.tmp/
 *.jar
