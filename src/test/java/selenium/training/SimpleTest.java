@@ -16,8 +16,12 @@ public class SimpleTest {
 
     @BeforeEach
     public void setUp(){
-        //WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+
+        ChromeOptions opts = new ChromeOptions();
+        opts.addArguments("start-maximized");
+        driver = new ChromeDriver(opts);
     }
 
     @AfterEach
