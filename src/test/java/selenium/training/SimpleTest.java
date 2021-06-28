@@ -1,14 +1,12 @@
 package selenium.training;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import java.util.Locale;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SimpleTest {
 
@@ -17,24 +15,44 @@ public class SimpleTest {
     @BeforeEach
     public void setUp(){
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-
         ChromeOptions opts = new ChromeOptions();
         opts.addArguments("start-maximized");
         driver = new ChromeDriver(opts);
+        driver.get("");
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement loginform = driver.findElement(By.cssSelector("div.content"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.content")));
+        loginform.findElement(By.name("username")).sendKeys("");
+        loginform.findElement(By.name("password")).sendKeys("");
+        driver.findElement(By.cssSelector("button[name=login]")).click();
     }
 
     @AfterEach
-    public void tearDown(){
+    public void tearDown()
+    {
         driver.quit();
     }
 
-    @Test
-    public void firstSeleniumTest(){
+    @Test //Homework 1: Click each element in the apps menu
+    public void clickItems() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#box-apps-menu")));
 
-        driver.get("https://www.google.com/webhp?hl=en");
-        driver.findElement(By.name("q")).sendKeys("Selenium" + Keys.ENTER);
-        Assertions.assertTrue(driver.findElement(By.cssSelector("h3")).getText().toLowerCase(Locale.ROOT).contains("selenium"), "Not found");
+        for (int menuIterator=0;
+             menuIterator<driver.findElements(By.cssSelector("#box-apps-menu>li")).size(); menuIterator++)
+            {
+                    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#box-apps-menu")));
+                    driver.findElements(By.cssSelector("#box-apps-menu>li")).get(menuIterator).click();
+                    Assertions.assertTrue(driver.findElement(By.cssSelector("div.panel-heading")).isDisplayed());
+
+                    for (int submenuIterator=0;
+                         submenuIterator<driver.findElements(By.cssSelector(".doc")).size(); submenuIterator++)
+                    {
+                        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#box-apps-menu")));
+                        driver.findElements(By.cssSelector(".doc")).get(submenuIterator).click();
+                        Assertions.assertTrue(driver.findElement(By.cssSelector("div.panel-heading")).isDisplayed());
+                    }
+            }
+
     }
-
 }
