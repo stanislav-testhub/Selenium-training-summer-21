@@ -33,12 +33,12 @@ public class SimpleTest {
         driver.quit();
     }
 
-    @Test
-    public void authorizationAction() {
+    @Test //Homework 1: Click each element in the apps menu
+    public void clickItems() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#box-apps-menu")));
 
-        for (int menuIterator=1;
+        for (int menuIterator=0;
              menuIterator<driver.findElements(By.cssSelector("#box-apps-menu>li")).size(); menuIterator++)
             {
                     wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#box-apps-menu")));
@@ -55,5 +55,4 @@ public class SimpleTest {
             }
 
     }
-
 }
