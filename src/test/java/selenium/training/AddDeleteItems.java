@@ -50,7 +50,7 @@ public class AddDeleteItems {
             addRandomProduct();
             wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn.btn-success"))).click();
             wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(".badge.quantity"), String.valueOf((i) + 1)));
-            driver.get("http://158.101.173.161/");
+            driver.get("");
         }
     }
 
