@@ -27,7 +27,7 @@ public class ListenerTest {
         edr = new EventFiringWebDriver(new ChromeDriver());
         edr.register(new Listener());
         wait = new WebDriverWait(edr, 10);
-        edr.get("http://158.101.173.161");
+        edr.get("");
         if (edr.findElement(By.cssSelector("#box-cookie-notice")).isDisplayed()) {
             edr.findElement(By.cssSelector("[name=accept_cookies]")).click();
         }
