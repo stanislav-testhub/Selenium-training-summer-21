@@ -20,10 +20,6 @@ public class AddDeleteItems {
 
     @BeforeEach
     public void setUp() {
-        extracted();
-    }
-
-    private void extracted() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions opts = new ChromeOptions();
         opts.addArguments("start-maximized");
