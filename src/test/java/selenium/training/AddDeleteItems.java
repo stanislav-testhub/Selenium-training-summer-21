@@ -20,11 +20,15 @@ public class AddDeleteItems {
 
     @BeforeEach
     public void setUp() {
+        extracted();
+    }
+
+    private void extracted() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions opts = new ChromeOptions();
         opts.addArguments("start-maximized");
         driver = new ChromeDriver(opts);
-        driver.get("");
+        driver.get("http://158.101.173.161/");
         if (driver.findElement(By.cssSelector("#box-cookie-notice")).isDisplayed()) {
             driver.findElement(By.cssSelector("[name=accept_cookies]")).click();
         }
@@ -50,7 +54,7 @@ public class AddDeleteItems {
             addRandomProduct();
             wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn.btn-success"))).click();
             wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(".badge.quantity"), String.valueOf((i) + 1)));
-            driver.get("");
+            driver.get("http://158.101.173.161/");
         }
     }
 
@@ -66,8 +70,7 @@ public class AddDeleteItems {
     private void removeProductsFromCart() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#cart"))).click();
-        wait.until(presenceOfElementLocated(By.cssSelector(".items.list-unstyled")));
-        int productsInTheCart = driver.findElements(By.cssSelector(".item")).size();
+        int productsInTheCart = wait.until(presenceOfAllElementsLocatedBy(By.cssSelector(".items"))).size();
         for (int cartItems = 0; cartItems <= productsInTheCart; cartItems++) {
                 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[name='remove_cart_item']"))).click();
                 wait.until(stalenessOf(driver.findElement(By.cssSelector(".items.list-unstyled"))));
